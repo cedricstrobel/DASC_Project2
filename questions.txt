@@ -1,0 +1,43 @@
+a. Why did you choose the specific architecture (e.g., number of layers, activation functions) for each model?
+
+The architecture was selected through grid search to balance model complexity and generalization.
+We explored networks with one or two hidden layers (e.g., 64 or 128 neurons, and combinations like 64–32) 
+to capture non-linear relationships while avoiding overfitting on a relatively small dataset.
+The activation functions ReLU and tanh were tested — tanh was ultimately selected by the grid 
+search because it produced higher validation accuracy, likely due to smoother gradients for this dataset.
+The Adam optimizer with an adaptive learning rate was used for stable and efficient convergence.
+Regularization strength (alpha) and learning rate were also tuned to ensure good generalization.
+The final architecture, (64, 32) with tanh, achieved the best performance with early stopping after 21 iterations, 
+indicating the network was sufficiently expressive without overfitting.
+
+b. How did you monitor and mitigate overfitting in your models?
+
+Overfitting was monitored by comparing performance on training and validation folds during cross-validation.
+The GridSearchCV with 5-fold cross-validation provided a robust estimate of 
+generalization performance across different data splits.
+Early stopping was enabled, which automatically halted training when validation 
+loss stopped improving. 
+In this case, training stopped after 21 iterations, indicating the model began to overfit beyond that point.
+L2 regularization (alpha) was tuned as part of the grid search to penalize overly complex weights and improve generalization.
+Additionally, proper feature scaling was applied to stabilize learning and prevent 
+certain features from dominating, further reducing overfitting risk
+
+c. What ethical concerns might arise from deploying models trained on these datasets?
+
+The Adult Income dataset includes sensitive demographic attributes such as age, race, gender, marital status, and education level.
+These features are strongly correlated with systemic social inequalities, so models trained on this data may inadvertently learn and reinforce existing socioeconomic biases.
+For example, if the model is deployed to support decisions in hiring, lending, or policy contexts, it could unfairly disadvantage underrepresented groups.
+Ethical concerns therefore include potential discrimination, lack of transparency in automated decision-making, and privacy risks from handling personal data.
+To mitigate these issues, it is crucial to anonymize sensitive fields, evaluate fairness metrics (e.g., demographic parity, equal opportunity), and apply bias mitigation techniques such as reweighting, feature auditing, or post-processing adjustments.
+Clear documentation and accountability mechanisms should also be established before deployment.
+
+d. Why are activation functions necessary in neural networks?
+
+Activation functions introduce non-linearity into neural networks, allowing them to model complex,
+non-linear relationships between inputs and outputs.
+Without activation functions, all layers would effectively collapse into a single linear transformation, 
+regardless of the network’s depth, making it incapable of learning complex decision boundaries.
+Functions such as ReLU, tanh, and sigmoid enable the network to capture diverse data patterns 
+while maintaining stable gradient propagation during backpropagation.
+In essence, activation functions control how information flows through the network and make deep 
+learning feasible for real-world, non-linear problems.
